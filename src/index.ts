@@ -28,8 +28,8 @@ async function run() {
     console.log('ai code review is underway...')
     const gitlab = new GitLab({gitlabApiUrl, gitlabAccessToken, projectId, mergeRequestId});
     const openai = new OpenAI(openaiApiUrl, openaiAccessToken, organizationId);
-    await gitlab.init().catch(() => {
-        console.log('gitlab init error')
+    await gitlab.init().catch((error) => {
+        console.log('gitlab init error', error);
     });
     const changes = await gitlab.getMergeRequestChanges().catch(() => {
         console.log('get merge request changes error')
