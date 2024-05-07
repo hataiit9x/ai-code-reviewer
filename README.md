@@ -1,31 +1,31 @@
-# @buxuku/ai-code-reviewer
+# @hataiit9x/ai-code-reviewer
 
-## 介绍
+## Summary
 
 ![](preview.png)
 
-`@buxuku/ai-code-reviewer` 是一款应用于 GitLab Merge Request 代码审查的小工具，支持调用私有化部署的 GitLab API，并使用 OpenAI API 获取审查结果。请注意，在使用它时，需要确保符合公司合规要求。😉
+`@hataiit9x/ai-code-reviewer` It is a small tool used for code review in GitLab Merge Requests. It supports calling the GitLab API for private deployment and uses the OpenAI API to obtain review results. Please note that when using it, ensure compliance with company regulations. 😉
 
 
-## 特点
+## Features
 
-- 🛠️ 支持配置 GitLab API 地址
-- 🌍 支持配置 OpenAI 代理 API 地址，解决国内可能无法访问 OpenAI API 的问题
-- 🆔 支持配置 OpenAI 组织 ID
-- ⚙️ 支持配置多个 OpenAI API Key 实现接口调用的负载均衡（多个 Key 以逗号分隔）
-- 🚦 超过速率限制时，自动等待并重试
-- 💬 审查结果以评论的方式追加到对应的代码块所在位置
+- 🛠️ Support configuration GitLab API address
+- 🌍 Support configuration OpenAI proxy API address to solve the problem that the OpenAI API may not be accessible in China
+- 🆔 Support configuration OpenAI organization ID
+- ⚙️ Support configuration OpenAI API Key to implement load balancing of interface calls (multiple Keys are separated by commas)
+- 🚦 Automatically wait and try again when the rate limit is exceeded
+- 💬 The review results are appended to the location of the corresponding code block in the form of comments
 
 
-## 安装
+## Install
 
 ```sh
-npm i @buxuku/ai-code-reviewer
+npm i @hataiit9x/ai-code-reviewer
 `````
 
-## 使用
+## Use
 
-### 通过 Shell 脚本使用
+### Use via shell script
 
 ```shell
 Usage: ai-code-reviewer [options]
@@ -41,15 +41,15 @@ Options:
   -h, --help                          display help for command
 ```
 
-示例:
+Example:
 
 ```sh
 ai-code-reviewer -g https://gitlab.com/api/v4 -t glpat-xxxxxxx -o https://api.openai.com -a skxxxxxxx,skxxxxxxx -p 432288 -m 8
 ```
 
-### 在 CI 中使用
+### Use in CI
 
-在 GitLab CI/CD 中设置 `GITLAB_TOKEN` 和 `CHATGPT_KEY` 变量，`.gitlab-ci.yml` 如下：
+Set the `GITLAB_TOKEN` and `CHATGPT_KEY` variables in GitLab CI/CD, `.gitlab-ci.yml` is as follows:
 
 ```yml
 stages:
@@ -59,15 +59,15 @@ Code Review:
   stage: merge-request  
   image: node:latest
   script:
-    - npm i @buxuku/ai-code-reviewer -g
+    - npm i @hataiit9x/ai-code-reviewer -g
     - ai-code-reviewer -t "$GITLAB_TOKEN" -a "$CHATGPT_KEY"  -p "$CI_MERGE_REQUEST_PROJECT_ID" -m "$CI_MERGE_REQUEST_IID"
   only:
     - merge_requests
   when: on_success
 ```
 
-## 贡献
-欢迎贡献代码，提出问题和建议！👏
+## contribute
+Welcome to contribute code, ask questions and suggestions! 👏
 
-## 许可证
-本项目基于 MIT 许可证。详细信息请参见 LICENSE 文件。📜
+## License
+This project is based on the MIT license. See the LICENSE file for details. 📜

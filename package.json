@@ -1,5 +1,5 @@
 {
-  "name": "@buxuku/ai-code-reviewer",
+  "name": "@hataiit9x/ai-code-reviewer",
   "version": "1.2.2",
   "main": "index.js",
   "bin": {
@@ -16,7 +16,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/buxuku/ai-code-reviewer"
+    "url": "https://github.com/hataiit9x/ai-code-reviewer"
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
