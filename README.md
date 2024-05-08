@@ -57,7 +57,7 @@ stages:
 
 Code Review:
   stage: merge-request  
-  image: node:latest
+  image: node:16
   script:
     - npm i @hataiit9x/ai-code-reviewer -g
     - ai-code-reviewer -t "$GITLAB_TOKEN" -a "$CHATGPT_KEY"  -p "$CI_MERGE_REQUEST_PROJECT_ID" -m "$CI_MERGE_REQUEST_IID"
