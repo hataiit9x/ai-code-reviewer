@@ -23,7 +23,7 @@ export const suggestContent = {
 
 export const openAiCompletionsConfig = {
     "temperature": 0,
-    "model": "gpt-4-turbo",
+    "model": "gpt-3.5-turbo",
     "stream": false,
 }
 

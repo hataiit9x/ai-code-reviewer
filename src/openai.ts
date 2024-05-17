@@ -37,7 +37,7 @@ export class OpenAI {
                 content: change
             }
         ];
-        const response = await this.apiClient.post('/v1/chat/completions', data, {
+        const response = await this.apiClient.post('/chat/completions', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.accessTokens[newIndex]}`

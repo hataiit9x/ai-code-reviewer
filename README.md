@@ -33,18 +33,19 @@ Usage: ai-code-reviewer [options]
 Options:
   -g, --gitlab-api-url <string>       GitLab API URL (default: " https://gitlab.com/api/v4")
   -t, --gitlab-access-token <string>  GitLab Access Token
-  -o, --openai-api-url <string>       OpenAI API URL (default: "https://api.openai.com")
+  -o, --openai-api-url <string>       OpenAI API URL (default: "https://api.openai.com/v1")
   -a, --openai-access-token <string>  OpenAI Access Token
   -p, --project-id <number>           GitLab Project ID
   -m, --merge-request-id <string>     GitLab Merge Request ID
   -org, --organization-id <number>    organization ID
+  -c, ----custom-model <string>       Custom Model ID (default: "gpt-3.5-turbo")
   -h, --help                          display help for command
 ```
 
 Example:
 
 ```sh
-ai-code-reviewer -g https://gitlab.com/api/v4 -t glpat-xxxxxxx -o https://api.openai.com -a skxxxxxxx,skxxxxxxx -p 432288 -m 8
+ai-code-reviewer -g https://gitlab.com/api/v4 -t glpat-xxxxxxx -o https://api.openai.com -a skxxxxxxx,skxxxxxxx -p  -c gpt-3.5-turbo 432288 -m 8
 ```
 
 ### Use in CI
@@ -60,7 +61,7 @@ Code Review:
   image: node:16
   script:
     - npm i @hataiit9x/ai-code-reviewer -g
-    - ai-code-reviewer -t "$GITLAB_TOKEN" -a "$CHATGPT_KEY"  -p "$CI_MERGE_REQUEST_PROJECT_ID" -m "$CI_MERGE_REQUEST_IID"
+    - ai-code-reviewer -t "$GITLAB_TOKEN" -a "$CHATGPT_KEY" -c "$CUSTOM_MODELS" -p "$CI_MERGE_REQUEST_PROJECT_ID" -m "$CI_MERGE_REQUEST_IID"
   only:
     - merge_requests
   when: on_success
