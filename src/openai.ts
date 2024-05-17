@@ -12,7 +12,7 @@ export class OpenAI {
     private accessTokens: string[];
     private accessTokenIndex = 0;
 
-    constructor(private apiUrl: string, private accessToken: string, private orgId?: string) {
+    constructor(private apiUrl: string, private accessToken: string, private orgId?: string, private customModel?: string) {
         this.accessTokens = accessToken.split(',');
         const headers: { 'OpenAI-Organization'?: string } = {};
         if (orgId) {
@@ -24,11 +24,14 @@ export class OpenAI {
                 ...headers,
             },
         });
+        console.log('openai client created')
+        console.log('openai access token:', this.accessTokens)
+        console.log('openai headers:', headers)
     }
 
     async reviewCodeChange(change: string): Promise<string> {
         const newIndex = this.accessTokenIndex = (this.accessTokenIndex >= this.accessTokens.length - 1 ? 0 : this.accessTokenIndex + 1);
-        const data: ICompletion = {...openAiCompletionsConfig};
+        const data: ICompletion = {...openAiCompletionsConfig,model: this.customModel || openAiCompletionsConfig.model};
         data.messages = [
             systemContent,
             suggestContent,
@@ -37,12 +40,14 @@ export class OpenAI {
                 content: change
             }
         ];
+        console.log('calling openai api...')
         const response = await this.apiClient.post('/chat/completions', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.accessTokens[newIndex]}`
             }
         });
+        console.log('openai api response:', response.data.choices?.[0]?.message?.content)
         return response.data.choices?.[0]?.message?.content;
     }
 }
