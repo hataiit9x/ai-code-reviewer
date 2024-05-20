@@ -53,6 +53,7 @@ async function run() {
                 const lineObj = getLineObj(matches, item);
                 if ((lineObj?.new_line && lineObj?.new_line > 0) || (lineObj.old_line && lineObj.old_line > 0)) {
                     try {
+                        console.log('use mode...',mode)
                         if (mode === 'gemini') { // check the mode
                             const suggestion = await gemini.reviewCodeChange(item);
                             if (!suggestion.includes('666')) {

@@ -1,6 +1,6 @@
 {
   "name": "@hataiit9x/ai-code-reviewer",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "main": "index.js",
   "bin": {
     "ai-code-reviewer": "bin/index.js"
