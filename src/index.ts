@@ -55,14 +55,18 @@ async function run() {
                     try {
                         console.log('use mode...',mode)
                         if (mode === 'gemini') { // check the mode
+                            console.log('use gemini')
                             const suggestion = await gemini.reviewCodeChange(item);
+                            console.log('suggestion gemini:', suggestion)
                             if (!suggestion.includes('666')) {
                                 await gitlab.addReviewComment(lineObj, change, suggestion);
                             }
                         } else { // use the OpenAI API by default
-                        const suggestion = await openai.reviewCodeChange(item);
-                        if (!suggestion.includes('666')) {
-                            await gitlab.addReviewComment(lineObj, change, suggestion);
+                            console.log('use openai')
+                            const suggestion = await openai.reviewCodeChange(item);
+                            console.log('suggestion openai:', suggestion)
+                            if (!suggestion.includes('666')) {
+                                await gitlab.addReviewComment(lineObj, change, suggestion);
                             }
                         }
                     } catch (e: any) {
