@@ -15,7 +15,7 @@ program
     .option('-m, --merge-request-id <string>', 'GitLab Merge Request ID')
     .option('-org, --organization-id <number>', 'organization ID')
     .option('-c, --custom-model <string>', 'Custom Model ID', 'gpt-3.5-turbo')
-    .option('-mode, --mode <string>', 'Mode', 'openai') // add mode option
+    .option('-mode, --mode <string>', 'Mode use OpenAI or Gemini', 'openai') // add mode option
     .parse(process.argv);
 
 async function run() {

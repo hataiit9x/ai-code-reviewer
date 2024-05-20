@@ -39,6 +39,7 @@ Options:
   -m, --merge-request-id <string>     GitLab Merge Request ID
   -org, --organization-id <number>    organization ID
   -c, ----custom-model <string>       Custom Model ID (default: "gpt-3.5-turbo")
+  -mode, --mode <string>              Mode use OpenAI or Gemini (default: openai)
   -h, --help                          display help for command
 ```
 
