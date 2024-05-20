@@ -90,7 +90,6 @@ export class GitLab {
     }
 
     async addReviewComment(lineObj: object, change: Record<string, any>, suggestion: string) {
-
         const response = await this.apiClient.post(`/projects/${this.projectId}/merge_requests/${this.mrId}/discussions`, {
             body: suggestion,
             position: {

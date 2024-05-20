@@ -1,6 +1,9 @@
 import axios, {AxiosInstance} from 'axios';
-import {geminiCompletionsConfig, suggestContent, systemContent} from "./utils";
-
+import {
+    geminiCompletionsConfig,
+    geminiSuggestContent,
+    geminiSystemContent,
+} from "./utils";
 const SAFETY_SETTINGS = [
     {
         category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
@@ -41,25 +44,34 @@ export class Gemini {
         }
         const body = {
             contents: [
-                systemContent,
-                suggestContent,
                 {
                     role: 'user',
-                    content: change
+                    parts: [
+                        {
+                            text: change
+                        }
+                    ]
                 }
             ],
+            systemInstruction: {
+                parts: [
+                    {
+                        text: geminiSystemContent
+                    },
+                    {
+                        text: geminiSuggestContent
+                    }
+                ]
+            },
             safetySettings: SAFETY_SETTINGS,
-        }
-
+        };
         const response = await this.apiClient.post(url, body, {
             headers: headers,
         });
-        console.log('gemini api response:', response);
 
         if (response.status < 200 || response.status >= 300) {
             throw new Error('Request failed');
         }
-
         const data = response.data;
         return data.candidates[0].content.parts[0].text;
     }

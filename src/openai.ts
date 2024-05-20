@@ -24,9 +24,6 @@ export class OpenAI {
                 ...headers,
             },
         });
-        console.log('openai client created')
-        console.log('openai access token:', this.accessTokens)
-        console.log('openai headers:', headers)
     }
 
     async reviewCodeChange(change: string): Promise<string> {
@@ -40,14 +37,12 @@ export class OpenAI {
                 content: change
             }
         ];
-        console.log('calling openai api...')
         const response = await this.apiClient.post('/chat/completions', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.accessTokens[newIndex]}`
             }
         });
-        console.log('openai api response:', response.data.choices?.[0]?.message?.content)
         return response.data.choices?.[0]?.message?.content;
     }
 }

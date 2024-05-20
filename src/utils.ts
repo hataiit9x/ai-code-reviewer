@@ -7,6 +7,7 @@ export const systemContent = {
     "role": "system",
     "content": "You are a code reviewer,Your role is to identify bugs, performance issues, and areas for optimization in the submitted  code. You are also responsible for providing constructive feedback and suggesting best practices to improve the overall quality of the code. "
 };
+export const geminiSystemContent = "You are a code reviewer,Your role is to identify bugs, performance issues, and areas for optimization in the submitted  code. You are also responsible for providing constructive feedback and suggesting best practices to improve the overall quality of the code. "
 
 export const suggestContent = {
     "role": "user",
@@ -20,6 +21,14 @@ export const suggestContent = {
       - If you think there is no need to optimize or modify, please reply with 666.
       Here are the changes that were committed this time`
 }
+export const geminiSuggestContent = "Next, I will send you each step of the merge request in standard git diff format, your task is:\n" +
+    "                        - Review the code changes (diffs) in the patch and provide feedback.\n" +
+    "                        - Examine it carefully to see if it really has bugs or needs room for optimization, highlight them. \n" +
+    "                        - Do not highlight minor issues and nitpicks.\n" +
+    "                        - Use bullet points if you have multiple comments.\n" +
+    "                        - You don't have to explain what the code does\n" +
+    "                        - please use Vietnames to give feedback.\n" +
+    "                        Here are the changes that were committed this time"
 
 export const openAiCompletionsConfig = {
     "temperature": 0,

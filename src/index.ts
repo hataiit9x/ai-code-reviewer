@@ -30,10 +30,15 @@ async function run() {
         customModel,
         mode // get the mode option
     } = program.opts();
-    console.log('ai code review is underway...')
     const gitlab = new GitLab({gitlabApiUrl, gitlabAccessToken, projectId, mergeRequestId});
-    const openai = new OpenAI(openaiApiUrl, openaiAccessToken, organizationId, customModel);
-    const gemini = new Gemini(openaiApiUrl, openaiAccessToken, customModel); // create a new instance of the Gemini class
+    let aiClient;
+    if (mode === 'gemini') { // check the mode
+        console.log('Creating Gemini client...');
+        aiClient = new Gemini(openaiApiUrl, openaiAccessToken, customModel); // create a new instance of the Gemini class
+    } else { // use the OpenAI API by default
+        console.log('Creating OpenAI client...');
+        aiClient = new OpenAI(openaiApiUrl, openaiAccessToken, organizationId, customModel);
+    }
     await gitlab.init().catch(() => {
         console.log('gitlab init error')
     });
@@ -53,22 +58,8 @@ async function run() {
                 const lineObj = getLineObj(matches, item);
                 if ((lineObj?.new_line && lineObj?.new_line > 0) || (lineObj.old_line && lineObj.old_line > 0)) {
                     try {
-                        console.log('use mode...',mode)
-                        if (mode === 'gemini') { // check the mode
-                            console.log('use gemini')
-                            const suggestion = await gemini.reviewCodeChange(item);
-                            console.log('suggestion gemini:', suggestion)
-                            if (!suggestion.includes('666')) {
-                                await gitlab.addReviewComment(lineObj, change, suggestion);
-                            }
-                        } else { // use the OpenAI API by default
-                            console.log('use openai')
-                            const suggestion = await openai.reviewCodeChange(item);
-                            console.log('suggestion openai:', suggestion)
-                            if (!suggestion.includes('666')) {
-                                await gitlab.addReviewComment(lineObj, change, suggestion);
-                            }
-                        }
+                        const suggestion = await aiClient.reviewCodeChange(item);
+                        await gitlab.addReviewComment(lineObj, change, suggestion);
                     } catch (e: any) {
                         if (e?.response?.status === 429) {
                             console.log('Too Many Requests, try again');
