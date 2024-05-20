@@ -26,6 +26,14 @@ export const openAiCompletionsConfig = {
     "model": "gpt-3.5-turbo",
     "stream": false,
 }
+export const geminiCompletionsConfig = {
+    temperature: 1,
+    topP: 0.95,
+    topK: 64,
+    maxOutputTokens: 8192,
+    responseMimeType: "text/plain",
+    model: "gemini-1.5-flash-latest",
+}
 
 export const delay = (time: number) => {
     return new Promise(resolve => setTimeout(resolve, time));
